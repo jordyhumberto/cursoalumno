@@ -9,7 +9,7 @@
 		$usuario = mysqli_real_escape_string($mysqli,$_POST['usuario']);
 		$password = mysqli_real_escape_string($mysqli,$_POST['clave']);
 		$error = '';
-		$sql = "SELECT Id_Usuario,Usuario,Clave,Estado FROM usuarios WHERE Usuario = '$usuario' AND Clave = '$password' AND Estado='01'";
+		$sql = "SELECT Id_Usuario,Usuario,Clave,Estado FROM Usuarios WHERE Usuario = '$usuario' AND Clave = '$password' AND Estado='01'";
 		//, id_tipo
 		$result=$mysqli->query($sql);
 		$rows = $result->num_rows;

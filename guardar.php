@@ -12,7 +12,7 @@
     for($i=0; $i < $N; $i++){
         $sqlCA="INSERT INTO Tbl_cursos_alumno(IDMatricula,IDCO,Estado) VALUES ('$IDMatricula','$id[$i]','01')";
         $resultadoCA=$mysqli->query($sqlCA);
-        $sqlNA="INSERT INTO Tbl_notas_alumno(IDMatricula,IDCO,Estado) VALUES ('$IDMatricula','$id[$i]','01')";
+        $sqlNA="INSERT INTO Tbl_notas_alumno(IDMatricula,IDCO,Estado) VALUES ('$IDMatricula','$id[$i]','02')";
         $resultadoNA=$mysqli->query($sqlNA);
     }
     header("Location: cursos.php?IDMatricula=$IDMatricula&IDCarrera=$IDCarrera&Nombre=$Nombre");

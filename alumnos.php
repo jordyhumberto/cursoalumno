@@ -25,6 +25,7 @@ $resultadoM=$mysqli->query($sqlM) or trigger_error($mysqli->error);
 	<script src="js/jquery.dataTables.min.js"></script>
 	<link rel="stylesheet" href="css/estilos.css">
 	<link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One|Ultra" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.css">
 	<script>
 		$(document).ready(function(){
 			$('#mitabla').DataTable({
@@ -49,8 +50,8 @@ $resultadoM=$mysqli->query($sqlM) or trigger_error($mysqli->error);
 </head>
 </head>
 <body>
-<div class="cuerpo" style="width:90vw;margin:auto;margin-top:5vw;">
-	<div style="display:flex;justify-content: flex-end;">
+<div class="cuerpo">
+	<div class="logout">
         <a href="logout.php" class="btn btn-primary">Logout</a>
     </div>
 	<br>

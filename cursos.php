@@ -28,7 +28,7 @@ $resultadoC=$mysqli->query($sqlC) or trigger_error($mysqli->error);
 	<script src="js/bootstrap.min.js"></script>	
 	<link href="css/jquery.dataTables.min.css" rel="stylesheet">	
 	<script src="js/jquery.dataTables.min.js"></script>
-	<link rel="stylesheet" href="css/estilos.css">
+	<link rel="stylesheet" href="css/style.css">
 	<link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One|Ultra" rel="stylesheet">
 	<script>
 		$(document).ready(function(){
@@ -73,8 +73,8 @@ $resultadoC=$mysqli->query($sqlC) or trigger_error($mysqli->error);
 </head>
 </head>
 <body>
-<div class="cuerpo" style="width:85vw;margin:auto;margin-top:5vw;">
-    <h1 style="text-align:center;"><?php echo $Nombre;?></h1><br>
+<div class="cuerpo">
+    <h1 class="titulo"><?php echo $Nombre;?></h1><br>
     <div class="row table-responsive">
         <table class="display" id="mitabla1">
             <thead>
