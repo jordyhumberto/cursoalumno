@@ -4,7 +4,8 @@ require 'conexion.php'; //Agregamos el script de Conexión
 if(!isset($_SESSION["id_usuario"])){
 	header("Location: index.php");
 }
-$sqlM="SELECT m.IDMatricula AS idm,m.IDAlumno AS ida,CONCAT(a.Nombres,' ',a.Apellido_paterno,' ',a.Apellido_materno) AS nombre,s.Descripcion AS semestre,m.IDCarrera AS carrera FROM ((Tbl_matricula_carrera AS m INNER JOIN Tbl_alumno AS a ON m.IDAlumno=a.IDAlumno)INNER JOIN Tbl_semestre AS s ON m.IDSemestre=s.IDSemestre) WHERE s.IDSemestre=79 OR s.IDSemestre=80";
+$IDCO=$_GET['IDCO'];
+$sqlM="SELECT mc.IDAlumno AS ida,mc.IDCarrera AS carrera,CONCAT(a.Nombres,' ',a.Apellido_paterno,' ',a.Apellido_materno) AS alumno,na.PPracticas AS practica,na.ExamenParcial AS parcial,na.ExamenFinal AS final,na.ExamenSusti AS susti,na.Promedio AS promedio,na.Estado AS estado FROM ((Tbl_notas_alumno AS na INNER JOIN Tbl_matricula_carrera AS mc ON na.IDMatricula=mc.IDMatricula)INNER JOIN Tbl_alumno AS a ON mc.IDAlumno=a.IDAlumno) WHERE na.IDCO='$IDCO'";
 $resultadoM=$mysqli->query($sqlM) or trigger_error($mysqli->error);
 ?>
 <html lang="en">
@@ -59,21 +60,31 @@ $resultadoM=$mysqli->query($sqlM) or trigger_error($mysqli->error);
         <table class="display" id="mitabla">
             <thead>
                 <tr>
-                    <th>Matricula</th>
                     <th>IDAlumno</th>
-                    <th>Nombre</th>
-                    <th>Semestre</th>
-                    <th>cursos</th>
+					<th>Carrera</th>
+                    <th>Alumno</th>
+					<th>PPrac</th>
+					<th>ExParc</th>
+					<th>ExFin</th>
+					<th>ExSus</th>
+					<th>Prom</th>
+					<th>Estado</th>
+					<th>Ingresar</th>
                 </tr>    
             </thead>
             <tbody>
             <?php while ($rowM=$resultadoM->fetch_array(MYSQLI_ASSOC)) {?>
                 <tr>
-                    <td><?php echo $rowM['idm']?></td>
                     <td><?php echo $rowM['ida']?></td>
-                    <td><?php echo $rowM['nombre']?></td>
-                    <td><?php echo $rowM['semestre']?></td>
-                    <td><a href="cursos.php?IDMatricula=<?php echo $rowM['idm'];?>&IDCarrera=<?php echo $rowM['carrera'];?>&Nombre=<?php echo $rowM['nombre']; ?>"><span class="glyphicon glyphicon-book"></span></a></td>
+					<td><?php echo $rowM['carrera']?></td>
+                    <td><?php echo $rowM['alumno']?></td>
+					<td><?php echo $rowM['practica']?></td>
+					<td><?php echo $rowM['parcial']?></td>
+					<td><?php echo $rowM['final']?></td>
+					<td><?php echo $rowM['susti']?></td>
+					<td><?php echo $rowM['promedio']?></td>
+					<td><?php echo $rowM['estado']?></td>
+                    <td><a href=""><span class="glyphicon glyphicon-book"></span></a></td>
                 </tr>
             <?php } ?>
             </tbody>

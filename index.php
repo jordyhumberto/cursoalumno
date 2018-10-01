@@ -2,7 +2,7 @@
 	require('conexion.php');
 	session_start();
 	if(isset($_SESSION["id_usuario"])){
-		header("Location: alumnos.php");
+		header("Location: cursos.php");
 	}
 	if(!empty($_POST))
 	{
@@ -16,7 +16,7 @@
 		if($rows > 0) {
 			$row = $result->fetch_assoc();
 			$_SESSION['id_usuario'] = $row['Id_Usuario'];
-			header("location: alumnos.php");
+			header("location: cursos.php");
 			} else {
 			$error = "El nombre o contrase&ntilde;a son incorrectos";
 		}
