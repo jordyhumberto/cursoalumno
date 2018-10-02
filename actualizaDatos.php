@@ -10,6 +10,24 @@
 	$parcial=$_POST['parcial'];
 	$final=$_POST['final'];
     $susti=$_POST['susti'];
-    $sql="UPDATE Tbl_notas_alumno SET PPracticas='$practica', ExamenParcial='$parcial', ExamenFinal='$final', ExamenSusti='$susti' WHERE IDMatricula='$matricula' AND IDCO='$cursooperativo'";
+    if ($final>$parcial) {
+        if ($susti>$parcial) {
+            $promedio=($practica+$final+$susti)/3;
+        }else{
+            $promedio=($practica+$parcial+$final)/3;
+        }
+    }else{
+        if ($susti>$final) {
+            $promedio=($practica+$parcial+$susti)/3;
+        }else{
+            $promedio=($practica+$parcial+$final)/3;
+        }
+    }
+    if ($promedio>=10.5) {
+        $estado="01";
+    }else{
+        $estado="02";
+    }
+    $sql="UPDATE Tbl_notas_alumno SET PPracticas='$practica', ExamenParcial='$parcial', ExamenFinal='$final', ExamenSusti='$susti',Promedio='$promedio',Estado='$estado' WHERE IDMatricula='$matricula' AND IDCO='$cursooperativo'";
     echo $result=$mysqli->query($sql) or trigger_error($mysqli->error);
  ?>

@@ -102,7 +102,7 @@ $resultadoM=$mysqli->query($sqlM) or trigger_error($mysqli->error);
 					<td><?php echo $rowM['final']?></td>
 					<td><?php echo $rowM['susti']?></td>
 					<td><?php echo $rowM['promedio']?></td>
-					<td><?php echo $rowM['estado']?></td>
+					<td><?php if($rowM['estado']=='01'){echo "<span class='glyphicon glyphicon-ok'></span";}else{echo "<span class='glyphicon glyphicon-remove'></span";}?></td>
                     <td><button class="btn btn-warning glyphicon glyphicon-pencil" data-toggle="modal" data-target="#modalEdicion" onclick="agregaform('<?php echo $datos ?>')"></button></td>
                 </tr>
             <?php } ?>
@@ -158,7 +158,6 @@ $resultadoM=$mysqli->query($sqlM) or trigger_error($mysqli->error);
 		parcial=$('#parcial').val();
 		final=$('#final').val();
 		susti=$('#susti').val();
-
 		cadena= "matricula=" + matricula +
 				"&cursooperativo=" + cursooperativo + 
 				"&practica=" + practica +
