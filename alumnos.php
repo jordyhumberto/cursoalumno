@@ -5,7 +5,9 @@ if(!isset($_SESSION["id_usuario"])){
 	header("Location: index.php");
 }
 $IDCO=$_GET['IDCO'];
-$sqlM="SELECT mc.IDAlumno AS ida,mc.IDCarrera AS carrera,CONCAT(a.Nombres,' ',a.Apellido_paterno,' ',a.Apellido_materno) AS alumno,na.PPracticas AS practica,na.ExamenParcial AS parcial,na.ExamenFinal AS final,na.ExamenSusti AS susti,na.Promedio AS promedio,na.Estado AS estado FROM ((Tbl_notas_alumno AS na INNER JOIN Tbl_matricula_carrera AS mc ON na.IDMatricula=mc.IDMatricula)INNER JOIN Tbl_alumno AS a ON mc.IDAlumno=a.IDAlumno) WHERE na.IDCO='$IDCO'";
+$Curso=$_GET['Curso'];
+$Docente=$_GET['Docente'];
+$sqlM="SELECT na.IDMatricula AS matricula,na.IDCO AS idco,mc.IDAlumno AS ida,mc.IDCarrera AS carrera,CONCAT(a.Nombres,' ',a.Apellido_paterno,' ',a.Apellido_materno) AS alumno,na.PPracticas AS practica,na.ExamenParcial AS parcial,na.ExamenFinal AS final,na.ExamenSusti AS susti,na.Promedio AS promedio,na.Estado AS estado FROM ((Tbl_notas_alumno AS na INNER JOIN Tbl_matricula_carrera AS mc ON na.IDMatricula=mc.IDMatricula)INNER JOIN Tbl_alumno AS a ON mc.IDAlumno=a.IDAlumno) WHERE na.IDCO='$IDCO'";
 $resultadoM=$mysqli->query($sqlM) or trigger_error($mysqli->error);
 ?>
 <html lang="en">
@@ -24,9 +26,12 @@ $resultadoM=$mysqli->query($sqlM) or trigger_error($mysqli->error);
 	<script src="js/bootstrap.min.js"></script>	
 	<link href="css/jquery.dataTables.min.css" rel="stylesheet">	
 	<script src="js/jquery.dataTables.min.js"></script>
-	<link rel="stylesheet" href="css/estilos.css">
+	<!-- <link rel="stylesheet" href="css/estilos.css"> -->
 	<link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One|Ultra" rel="stylesheet">
 	<link rel="stylesheet" href="css/style.css">
+	<!-- <script src="librerias/jquery-3.2.1.min.js"></script> -->
+	<script src="librerias/alertifyjs/alertify.js"></script>
+  	<script src="librerias/select2/js/select2.js"></script>
 	<script>
 		$(document).ready(function(){
 			$('#mitabla').DataTable({
@@ -52,12 +57,14 @@ $resultadoM=$mysqli->query($sqlM) or trigger_error($mysqli->error);
 </head>
 <body>
 <div class="cuerpo">
-	<div class="logout">
-        <a href="logout.php" class="btn btn-primary">Logout</a>
+	<h3><?php echo $Curso?></h3>
+	<h4><?php echo $Docente?></h4>
+	<div style="display:flex;justify-content: flex-end;">
+        <a href="cursos.php" class="btn btn-primary">Regresar</a>
     </div>
 	<br>
     <div class="row table-responsive">
-        <table class="display" id="mitabla">
+        <table class="display" id="mitabla" style="font-size:1vw;">
             <thead>
                 <tr>
                     <th>IDAlumno</th>
@@ -73,7 +80,19 @@ $resultadoM=$mysqli->query($sqlM) or trigger_error($mysqli->error);
                 </tr>    
             </thead>
             <tbody>
-            <?php while ($rowM=$resultadoM->fetch_array(MYSQLI_ASSOC)) {?>
+            <?php while ($rowM=$resultadoM->fetch_array(MYSQLI_ASSOC)) {
+				$datos=	$rowM['matricula']."||".
+						$rowM['idco']."||".
+						$rowM['ida']."||".
+						$rowM['carrera']."||".
+						$rowM['alumno']."||".
+						$rowM['practica']."||".
+						$rowM['parcial']."||".
+						$rowM['final']."||".
+						$rowM['susti']."||".
+						$rowM['promedio']."||".
+						$rowM['estado'];
+			?>
                 <tr>
                     <td><?php echo $rowM['ida']?></td>
 					<td><?php echo $rowM['carrera']?></td>
@@ -84,13 +103,90 @@ $resultadoM=$mysqli->query($sqlM) or trigger_error($mysqli->error);
 					<td><?php echo $rowM['susti']?></td>
 					<td><?php echo $rowM['promedio']?></td>
 					<td><?php echo $rowM['estado']?></td>
-                    <td><a href=""><span class="glyphicon glyphicon-book"></span></a></td>
+                    <td><button class="btn btn-warning glyphicon glyphicon-pencil" data-toggle="modal" data-target="#modalEdicion" onclick="agregaform('<?php echo $datos ?>')"></button></td>
                 </tr>
             <?php } ?>
             </tbody>
         </table>
     </div>
 </div>
+</div>
 
+<!-- Modal para edicion de datos -->
+<div class="modal fade" id="modalEdicion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  	<div class="modal-dialog modal-sm" role="document">
+    	<div class="modal-content">
+    		<div class="modal-header">
+        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        		<h4 class="modal-title" id="myModalLabel">Actualizar notas</h4>
+      		</div>
+			<div class="modal-body">
+				<input type="text" hidden="" id="matricula" name="matricula">
+				<input type="text" hidden="" id="cursooperativo" name="cursooperativo">  
+				<label>Nombre</label>
+				<input type="text" name="" id="nombre" class="form-control input-sm" readonly>
+				<label>PPracticas</label>
+				<input type="number" name="practica" id="practica" class="form-control input-sm" step="any">
+				<label>EParcial</label>
+				<input type="number" name="parcial" id="parcial" class="form-control input-sm" step="any">
+				<label>EFinal</label>
+				<input type="number" name="final" id="final" class="form-control input-sm" step="any">
+				<label>ESustitutorio</label>
+				<input type="number" name="susti" id="susti" class="form-control input-sm" step="any">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-warning" id="actualizadatos" data-dismiss="modal">Actualizar</button>
+			</div>
+    	</div>
+	</div>
+</div>
+<script type="text/javascript">
+	function agregaform(datos){
+		d=datos.split('||');
+		$('#matricula').val(d[0]);
+		$('#cursooperativo').val(d[1]);
+		$('#nombre').val(d[4]);
+		$('#practica').val(d[5]);
+		$('#parcial').val(d[6]);
+		$('#final').val(d[7]);
+		$('#susti').val(d[8]);
+	}
+	function actualizaDatos(){
+		matricula=$('#matricula').val();
+		cursooperativo=$('#cursooperativo').val();
+		practica=$('#practica').val();
+		parcial=$('#parcial').val();
+		final=$('#final').val();
+		susti=$('#susti').val();
+
+		cadena= "matricula=" + matricula +
+				"&cursooperativo=" + cursooperativo + 
+				"&practica=" + practica +
+				"&parcial=" + parcial +
+				"&final=" + final +
+				"&susti=" + susti;
+		$.ajax({
+			type:"POST",
+			url:"actualizaDatos.php",
+			data:cadena,
+			success:function(r){
+				if(r==1){
+					alert("Actualizado con exito :)");
+					location.reload(true);
+				}else{
+					alert("Fallo el servidor :(");
+				}
+			}
+		});
+	}
+	
+</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#actualizadatos').click(function(){
+			actualizaDatos();
+		});
+	});
+</script>
 </body>
 </html>

@@ -70,7 +70,7 @@ $resultado=$mysqli->query($sql) or trigger_error($mysqli->error);
                     <td><?php echo $row['curso']?></td>
                     <td><?php echo $row['docente']?></td>
                     <td><?php echo $row['semestre']?></td>
-                    <td><a href="alumnos.php?IDCO=<?php echo $row['idco'];?>"><span class="glyphicon glyphicon-user"></span></a></td>
+                    <td><a href="alumnos.php?IDCO=<?php echo $row['idco'];?>&Curso=<?php echo $row['curso']?>&Docente=<?php echo $row['docente']?>"><span class="glyphicon glyphicon-user"></span></a></td>
                 </tr>
             <?php } ?>
             </tbody>
