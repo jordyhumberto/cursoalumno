@@ -50,6 +50,10 @@ $resultado=$mysqli->query($sql) or trigger_error($mysqli->error);
 </head>
 <body>
 <div class="cuerpo">
+    <div class="logout">
+        <a href="logout.php" class="btn btn-primary">Logout</a>
+    </div>
+	<br>
     <div class="row table-responsive">
         <table class="display" id="mitabla">
             <thead>
