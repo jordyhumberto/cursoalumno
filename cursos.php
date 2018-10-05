@@ -4,7 +4,7 @@ require 'conexion.php'; //Agregamos el script de Conexión
 if(!isset($_SESSION["id_usuario"])){
     header("Location: index.php");
 }
-$sql="SELECT co.IDCO AS idco,co.IDCursos AS idc,c.Descripcion AS curso,CONCAT(d.Nombres,' ',d.Apellidos) AS docente,s.Descripcion AS semestre FROM (((Tbl_curso_operativo AS co INNER JOIN Tbl_cursos AS c ON co.IDCursos=c.IDCursos) INNER JOIN Tbl_semestre AS s ON co.IDSemestre=s.IDSemestre)INNER JOIN tbl_docente AS d ON co.IDDocente=d.IDDocente) WHERE s.IDSemestre=79 OR s.IDSemestre=80";
+$sql="SELECT co.IDCO AS idco,co.IDCursos AS idc,c.Descripcion AS curso,CONCAT(d.Nombres,' ',d.Apellidos) AS docente,s.Descripcion AS semestre FROM (((Tbl_curso_operativo AS co INNER JOIN Tbl_cursos AS c ON co.IDCursos=c.IDCursos) INNER JOIN Tbl_semestre AS s ON co.IDSemestre=s.IDSemestre)INNER JOIN Tbl_docente AS d ON co.IDDocente=d.IDDocente) WHERE s.IDSemestre=79 OR s.IDSemestre=80";
 $resultado=$mysqli->query($sql) or trigger_error($mysqli->error);
 ?>
 <html lang="en">
@@ -51,7 +51,7 @@ $resultado=$mysqli->query($sql) or trigger_error($mysqli->error);
 <body>
 <div class="cuerpo">
     <div class="logout">
-        <a href="logout.php" class="btn btn-primary">Logout</a>
+        <a href="logout.php" class="btn btn-danger">Logout</a>
     </div>
 	<br>
     <div class="row table-responsive">
@@ -74,7 +74,7 @@ $resultado=$mysqli->query($sql) or trigger_error($mysqli->error);
                     <td><?php echo $row['curso']?></td>
                     <td><?php echo $row['docente']?></td>
                     <td><?php echo $row['semestre']?></td>
-                    <td><a href="alumnos.php?IDCO=<?php echo $row['idco'];?>&Curso=<?php echo $row['curso']?>&Docente=<?php echo $row['docente']?>"><span class="glyphicon glyphicon-user"></span></a></td>
+                    <td><a href="alumnos.php?IDCO=<?php echo $row['idco'];?>&Curso=<?php echo $row['curso']?>&Docente=<?php echo $row['docente']?>" class="btn btn-success glyphicon glyphicon-user"></span></a></td>
                 </tr>
             <?php } ?>
             </tbody>

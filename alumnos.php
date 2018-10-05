@@ -60,7 +60,7 @@ $resultadoM=$mysqli->query($sqlM) or trigger_error($mysqli->error);
 	<h3><?php echo $Curso?></h3>
 	<h4><?php echo $Docente?></h4>
 	<div style="display:flex;justify-content: flex-end;">
-        <a href="cursos.php" class="btn btn-primary">Regresar</a>
+        <a href="cursos.php" class="btn btn-warning">Regresar</a>
     </div>
 	<br>
     <div class="row table-responsive">
